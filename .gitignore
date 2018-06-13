@@ -1,0 +1,6 @@
+.gradle/
+build/
+gen/
+
+*.iml
+fabric.properties
