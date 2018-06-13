@@ -1,6 +1,8 @@
 .gradle/
 build/
 gen/
+.idea/
+out/
 
 *.iml
 fabric.properties

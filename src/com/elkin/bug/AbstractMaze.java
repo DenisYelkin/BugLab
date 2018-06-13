@@ -84,73 +84,73 @@ public abstract class AbstractMaze implements Comparable<AbstractMaze>, Serializ
         return grid;
     }
 
+//    public static boolean hasRoute(boolean[][] bugGrid) {
+//        return dfs(0, 0, bugGrid);
+//    }
+//
+//    private static boolean dfs(int x, int y, boolean[][] grid) {
+//        for (Direction direction: Direction.values) {
+//            int dx = x + direction.dx;
+//            int dy = y + direction.dy;
+//            if (dx < 0 || dy < 0 || dx >= WIDTH || dy >= HEIGHT) {
+//                continue;
+//            }
+//
+//            if (dx == (WIDTH - 1) && dy == (HEIGHT - 1)) {
+//                return true;
+//            }
+//
+//            if (!grid[dy][dx]) {
+//                grid[dy][dx] = true;
+//                if (dfs(dx, dy, grid)) {
+//                    return true;
+//                }
+//            }
+//        }
+//        return false;
+//    }
+
     public static boolean hasRoute(boolean[][] bugGrid) {
-        return dfs(0, 0, bugGrid);
-    }
-
-    private static boolean dfs(int x, int y, boolean[][] grid) {
-        for (Direction direction: Direction.values) {
-            int dx = x + direction.dx;
-            int dy = y + direction.dy;
-            if (dx < 0 || dy < 0 || dx >= WIDTH || dy >= HEIGHT) {
-                continue;
-            }
-
-            if (dx == (WIDTH - 1) && dy == (HEIGHT - 1)) {
-                return true;
-            }
-
-            if (!grid[dy][dx]) {
-                grid[dy][dx] = true;
-                if (dfs(dx, dy, grid)) {
-                    return true;
+        int WALL = -1;
+        int BLANK = -2;
+        int d = 0;
+        boolean found;
+        int[][] grid = new int[HEIGHT][WIDTH];
+        for (int i = 0; i < HEIGHT; i++) {
+            for (int j = 0; j < WIDTH; j++) {
+                if (bugGrid[i][j]) {
+                    grid[i][j] = WALL;
+                } else {
+                    grid[i][j] = BLANK;
                 }
             }
         }
-        return false;
-    }
+        if (grid[0][0] == WALL || grid[HEIGHT - 1][WIDTH - 1] == WALL) {
+            throw new RuntimeException("INVALID data");
+        }
 
-//    public boolean hasRoute(boolean[][] bugGrid) {
-//        int WALL = -1;
-//        int BLANK = -2;
-//        int d = 0;
-//        boolean found;
-//        int[][] grid = new int[BugMaze.HEIGHT][BugMaze.WIDTH];
-//        for (int i = 0; i < BugMaze.HEIGHT; i++) {
-//            for (int j = 0; j < BugMaze.WIDTH; j++) {
-//                if (bugGrid[i][j]) {
-//                    grid[i][j] = WALL;
-//                } else {
-//                    grid[i][j] = BLANK;
-//                }
-//            }
-//        }
-//        if (grid[0][0] == WALL || grid[BugMaze.HEIGHT - 1][BugMaze.WIDTH - 1] == WALL) {
-//            throw new RuntimeException("INVALID data");
-//        }
-//
-//        grid[0][0] = 0;
-//
-//        do {
-//            found = true;
-//            for (int y = 0; y < BugMaze.HEIGHT; y++) {
-//                for (int x = 0; x < BugMaze.WIDTH; x++) {
-//                    if (grid[y][x] == d) {
-//                        for (Direction direction : Direction.values) {
-//                            int dy = y + direction.dy;
-//                            int dx = x + direction.dx;
-//                            if (dy >= 0 && dy < BugMaze.HEIGHT && dx >= 0 && dx < BugMaze.WIDTH
-//                                    && grid[dy][dx] == BLANK) {
-//                                found = false;
-//                                grid[dy][dx] = d + 1;
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//            d++;
-//        } while (!found && grid[BugMaze.HEIGHT - 1][BugMaze.WIDTH - 1] == BLANK);
-//
-//        return grid[BugMaze.HEIGHT - 1][BugMaze.WIDTH - 1] != BLANK;
-//    }
+        grid[0][0] = 0;
+
+        do {
+            found = true;
+            for (int y = 0; y < HEIGHT; y++) {
+                for (int x = 0; x < WIDTH; x++) {
+                    if (grid[y][x] == d) {
+                        for (Direction direction : Direction.values) {
+                            int dy = y + direction.dy;
+                            int dx = x + direction.dx;
+                            if (dy >= 0 && dy < HEIGHT && dx >= 0 && dx < WIDTH
+                                    && grid[dy][dx] == BLANK) {
+                                found = false;
+                                grid[dy][dx] = d + 1;
+                            }
+                        }
+                    }
+                }
+            }
+            d++;
+        } while (!found && grid[HEIGHT - 1][WIDTH - 1] == BLANK);
+
+        return grid[HEIGHT - 1][WIDTH - 1] != BLANK;
+    }
 }
