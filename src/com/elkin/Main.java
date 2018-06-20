@@ -1,6 +1,5 @@
 package com.elkin;
 
-import com.elkin.bug.AbstractMaze;
 import com.elkin.bug.Bug;
 
 public class Main {

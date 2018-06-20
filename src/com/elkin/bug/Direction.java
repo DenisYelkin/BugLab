@@ -13,12 +13,11 @@ public enum Direction {
     DOWN(0, 1, 4, 2),
     LEFT(-1, 0, 1, 8),
     RIGHT(1, 0, 3, 4);
+    public static final Direction[] VALUES = Direction.values();
+    private static final Random random = new Random(System.currentTimeMillis());
     public final int dx, dy;
     public final int priority;
     public final int weight;
-
-    public static final Direction[] values = Direction.values();
-    private static final Random random = new Random(System.currentTimeMillis());
 
     Direction(int dx, int dy, int priority, int weight) {
         this.dx = dx;
@@ -27,22 +26,8 @@ public enum Direction {
         this.weight = weight;
     }
 
-    public int getOppositeByWeight() {
-        switch (this) {
-            case UP:
-                return DOWN.weight;
-            case DOWN:
-                return UP.weight;
-            case LEFT:
-                return RIGHT.weight;
-            case RIGHT:
-                return LEFT.weight;
-        }
-        return 0;
-    }
-
     public static Direction[] getShuffledValues() {
-        Direction[] directions = Arrays.copyOf(values, values.length);
+        Direction[] directions = Arrays.copyOf(VALUES, VALUES.length);
         Arrays.sort(directions, (o1, o2) -> {
             int i = random.nextInt(3);
             if (i == 0) {
@@ -74,5 +59,19 @@ public enum Direction {
     public static Comparator<Direction> getComparator() {
         Comparator<Direction> c = Comparator.comparingInt(o -> o.priority);
         return c.reversed();
+    }
+
+    public int getOppositeByWeight() {
+        switch (this) {
+            case UP:
+                return DOWN.weight;
+            case DOWN:
+                return UP.weight;
+            case LEFT:
+                return RIGHT.weight;
+            case RIGHT:
+                return LEFT.weight;
+        }
+        return 0;
     }
 }

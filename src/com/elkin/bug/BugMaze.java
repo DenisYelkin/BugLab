@@ -55,7 +55,7 @@ public class BugMaze extends AbstractMaze {
 
         for (int y = 0; y < HEIGHT; y += 2) {
             for (int x = 0; x < WIDTH; x += 2) {
-                for (Direction direction : Direction.values) {
+                for (Direction direction : Direction.VALUES) {
                     if ((grid[y][x] & direction.weight) != 0) {
                         int dx = x + direction.dx;
                         int dy = y + direction.dy;

@@ -53,7 +53,7 @@ public class HumanMaze extends AbstractMaze {
         for (int y = 0; y < AbstractMaze.HEIGHT; y += 2) {
             for (int x = 0; x < AbstractMaze.WIDTH; x += 2) {
                 result[y][x] = false;
-                for (Direction direction : Direction.values) {
+                for (Direction direction : Direction.VALUES) {
                     if ((grid[y / 2][x / 2] & direction.weight) != 0) {
                         int dx = x + direction.dx;
                         int dy = y + direction.dy;
